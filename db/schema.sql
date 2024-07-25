@@ -1,4 +1,3 @@
-DROP DATABASE IF EXISTS todo_db;
-CREATE DATABASE todo_db;
+DROP DATABASE IF EXISTS todo_list_db;
 
-\c todo_db;
+CREATE DATABASE todo_list_db;
