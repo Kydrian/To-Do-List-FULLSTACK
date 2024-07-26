@@ -1,0 +1,19 @@
+<h1>To-Do List</h1>
+<form id="task-form" method="POST" action="/api/tasks">
+  <input type="text" id="task" name="task" required>
+  <button type="submit">Add Task</button>
+</form>
+<ul id="tasksList">
+  {{#each tasks as |task|}}
+    <li>
+      {{task.task}}
+      <input type="checkbox" {{#if task.completed}}checked{{/if}} data-id="{{task.id}}">
+      <button data-id="{{task.id}}">Delete</button>
+    </li>
+  {{/each}}
+</ul>
+<form id="logout-form" method="POST" action="/api/users/logout">
+  <button type="submit">Logout</button>
+</form>
+
+<script src = "/js/deletetask.js"></script>
