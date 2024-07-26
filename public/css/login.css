@@ -1,22 +1,21 @@
+/* Login HTML */
+
+/* BASIC */
+
+html {
+  background-color: #56baed;
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
 }
 
-form {
-  max-width: 300px;
-  margin: 0 auto;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-div {
-  margin-bottom: 1rem;
-}
-
-label {
-  display: block;
-  margin-bottom: 0.5rem;
+a {
+  color: #92badd;
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 400;
 }
 
 input[type="text"],
