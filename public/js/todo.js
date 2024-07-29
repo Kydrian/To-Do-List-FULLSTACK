@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const taskInput = document.getElementById('task');
     const task = taskInput.value.trim();
+    alert(task);
 
     if (task) {
       fetch('/api/tasks', {
@@ -95,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetch('/api/tasks')
     .then(response => response.json())
     .then(tasks => {
+      console.log(tasks)
       tasks.forEach(task => addTaskToDOM(task));
     })
     .catch(error => {
