@@ -1,25 +1,38 @@
-console.log("it works");
-const delButtonHandler = async (event) => {
-  console.log(event.target)
-    if (event.target.hasAttribute('data-id')) {
-      const id = event.target.getAttribute('data-id');
-  
-      const response = await fetch(`/api/tasks/${id}`, {
-        method: 'DELETE',
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+    checkbox.addEventListener('change', (event) => {
+      const taskId = event.target.getAttribute('data-id');
+      const completed = event.target.checked;
+
+      fetch(`/api/tasks/${taskId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ completed })
+      }).then(response => {
+        if (response.ok) {
+          location.reload();
+        } else {
+          alert('Failed to update task');
+        }
       });
-  
-      if (response.ok) {
-        document.location.replace('/api/tasks');
-      } else {
-        alert('Failed to delete task');
-      }
-    }
-  };
-  
-  document
-    .querySelector('#tasksList')
-    .addEventListener('click', delButtonHandler);
-    console.log("hi");
- 
-  
-  
+    });
+  });
+
+  document.querySelectorAll('button[data-id]').forEach(button => {
+    button.addEventListener('click', (event) => {
+      const taskId = event.target.getAttribute('data-id');
+
+      fetch(`/api/tasks/${taskId}`, {
+        method: 'DELETE'
+      }).then(response => {
+        if (response.ok) {
+          location.reload();
+        } else {
+          alert('Failed to delete task');
+        }
+      });
+    });
+  });
+});
