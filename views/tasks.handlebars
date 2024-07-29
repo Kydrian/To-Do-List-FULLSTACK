@@ -1,19 +1,54 @@
-<h1>To-Do List</h1>
-<form id="task-form" method="POST" action="/api/tasks">
-  <input type="text" id="task" name="task" required>
-  <button type="submit">Add Task</button>
-</form>
-<ul id="tasksList">
-  {{#each tasks as |task|}}
-    <li>
-      {{task.task}}
-      <input type="checkbox" {{#if task.completed}}checked{{/if}} data-id="{{task.id}}">
-      <button data-id="{{task.id}}">Delete</button>
-    </li>
-  {{/each}}
-</ul>
-<form id="logout-form" method="POST" action="/api/users/logout">
-  <button type="submit">Logout</button>
-</form>
+<head>
+  <title>To-Do List with Kanban Board</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/todo.css">
+</head>
 
-<script src = "/js/deletetask.js"></script>
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-header text-center">
+        <h1>To-Do List</h1>
+      </div>
+      <div class="card-body">
+        <form id="task-form" method="POST" class="input-group mb-3">
+          <input type="text" id="task" name="task" class="form-control" placeholder="Add a new task" required>
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">Add Task</button>
+          </div>
+        </form>
+        <div class="kanban-board">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="kanban-column">
+                <h3>To Do</h3>
+                <ul id="todo-list" class="list-group sortable"></ul>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="kanban-column">
+                <h3>In Progress</h3>
+                <ul id="inprogress-list" class="list-group sortable"></ul>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="kanban-column">
+                <h3>Done</h3>
+                <ul id="done-list" class="list-group sortable"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-center">
+        <form id="logout-form" method="POST" action="/api/users/logout">
+          <button class="btn btn-secondary" type="submit">Logout</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+  <script src="/js/todo.js"></script>
+
