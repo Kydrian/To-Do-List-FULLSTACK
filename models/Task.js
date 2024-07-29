@@ -1,3 +1,5 @@
+// models/Task.js
+
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
@@ -9,30 +11,27 @@ Task.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true,
+      autoIncrement: true
     },
     task: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
+    // inProgress: {
+    //   type: DataTypes.BOOLEAN,
+    //   defaultValue: false
+    // },
     completed: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'user',
-        key: 'id',
-      },
-    },
+      defaultValue: false
+    }
   },
   {
     sequelize,
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'task',
+    modelName: 'task'
   }
 );
 

@@ -1,72 +1,81 @@
+// controllers/api/taskRoutes.js
+
 const router = require('express').Router();
 const { Task } = require('../../models');
 
-// Get all tasks for logged in user
-router.get('/', async (req, res) => {
+// Create a new task
+router.post('/', async (req, res) => {
   try {
-    const taskData = await Task.findAll({
-      where: {
-        user_id: req.session.user_id,
-      },
+    const task = await Task.create({
+      task: req.body.task
     });
 
-    const tasks = taskData.map((task) => task.get({ plain: true }));
+    res.status(200).json(task);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 
-    res.render('tasks', { tasks, loggedIn: req.session.logged_in });
+// Update task status
+router.put('/:id', async (req, res) => {
+  try {
+    const task = await Task.update(
+      {
+        inProgress: req.body.inProgress,
+        completed: req.body.completed
+      },
+      {
+        where: { id: req.params.id }
+      }
+    );
+
+    if (task[0] === 0) {
+      res.status(404).json({ message: 'No task found with this id!' });
+      return;
+    }
+
+    res.status(200).json(task);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-// Create new task
-router.post('/', async (req, res) => {
-  try {
-    const newTask = await Task.create({
-      ...req.body,
-      user_id: req.session.user_id,
-    });
-
-    res.status(200).json(newTask);
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
-
-// Update task completion status
+// Edit a task
 router.put('/:id', async (req, res) => {
   try {
-    const updatedTask = await Task.update(
-      { completed: req.body.completed },
+    const task = await Task.update(
       {
-        where: {
-          id: req.params.id,
-        },
+        task: req.body.task
+      },
+      {
+        where: { id: req.params.id }
       }
     );
 
-    res.status(200).json(updatedTask);
+    if (task[0] === 0) {
+      res.status(404).json({ message: 'No task found with this id!' });
+      return;
+    }
+
+    res.status(200).json(task);
   } catch (err) {
-    res.status(400).json(err);
+    res.status(500).json(err);
   }
 });
 
 // Delete a task
 router.delete('/:id', async (req, res) => {
-  console.log('trying to delete task', req.params.id);
   try {
-    const deletedTask = await Task.destroy({
-      where: {
-        id: req.params.id,
-        user_id: req.session.user_id,
-      },
+    const task = await Task.destroy({
+      where: { id: req.params.id }
     });
 
-    if (!deletedTask) {
+    if (!task) {
       res.status(404).json({ message: 'No task found with this id!' });
       return;
     }
 
-    res.status(200).json(deletedTask);
+    res.status(200).json(task);
   } catch (err) {
     res.status(500).json(err);
   }
