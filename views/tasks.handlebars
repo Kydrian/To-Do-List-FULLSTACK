@@ -10,7 +10,7 @@
         <h1>To-Do List</h1>
       </div>
       <div class="card-body">
-        <form id="task-form" method="POST" action="/api/tasks" class="input-group mb-3">
+        <form id="task-form" method="POST" class="input-group mb-3">
           <input type="text" id="task" name="task" class="form-control" placeholder="Add a new task" required>
           <div class="input-group-append">
             <button class="btn btn-primary" type="submit">Add Task</button>
@@ -21,59 +21,19 @@
             <div class="col-md-4">
               <div class="kanban-column">
                 <h3>To Do</h3>
-                <ul id="todo-list" class="list-group">
-                  {{#each tasks as |task|}}
-                    {{#unless task.completed}}
-                      {{#unless task.inProgress}}
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                          {{task.task}}
-                          <div>
-                            <input type="checkbox" class="mr-2" {{#if task.completed}}checked{{/if}} data-id="{{task.id}}">
-                            <button class="btn btn-danger btn-sm" data-id="{{task.id}}">Delete</button>
-                          </div>
-                        </li>
-                      {{/unless}}
-                    {{/unless}}
-                  {{/each}}
-                </ul>
+                <ul id="todo-list" class="list-group"></ul>
               </div>
             </div>
             <div class="col-md-4">
               <div class="kanban-column">
                 <h3>In Progress</h3>
-                <ul id="inprogress-list" class="list-group">
-                  {{#each tasks as |task|}}
-                    {{#if task.inProgress}}
-                      {{#unless task.completed}}
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                          {{task.task}}
-                          <div>
-                            <input type="checkbox" class="mr-2" {{#if task.completed}}checked{{/if}} data-id="{{task.id}}">
-                            <button class="btn btn-danger btn-sm" data-id="{{task.id}}">Delete</button>
-                          </div>
-                        </li>
-                      {{/unless}}
-                    {{/if}}
-                  {{/each}}
-                </ul>
+                <ul id="inprogress-list" class="list-group"></ul>
               </div>
             </div>
             <div class="col-md-4">
               <div class="kanban-column">
                 <h3>Done</h3>
-                <ul id="done-list" class="list-group">
-                  {{#each tasks as |task|}}
-                    {{#if task.completed}}
-                      <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{task.task}}
-                        <div>
-                          <input type="checkbox" class="mr-2" {{#if task.completed}}checked{{/if}} data-id="{{task.id}}">
-                          <button class="btn btn-danger btn-sm" data-id="{{task.id}}">Delete</button>
-                        </div>
-                      </li>
-                    {{/if}}
-                  {{/each}}
-                </ul>
+                <ul id="done-list" class="list-group"></ul>
               </div>
             </div>
           </div>
@@ -87,6 +47,7 @@
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="/js/deletetask.js"></script>
+  <script src="/js/todo.js"></script>
