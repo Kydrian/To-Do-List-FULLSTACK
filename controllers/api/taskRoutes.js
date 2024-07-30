@@ -1,8 +1,8 @@
-const router = require('express').Router();
-const { Task } = require('../../models');
+const router = require("express").Router();
+const { Task } = require("../../models");
 
 // Get all tasks for logged in user
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const taskData = await Task.findAll({
       where: {
@@ -10,16 +10,14 @@ router.get('/', async (req, res) => {
       },
     });
 
-    const tasks = taskData.map((task) => task.get({ plain: true }));
-
-    res.render('tasks', { tasks, loggedIn: req.session.logged_in });
+    res.status(200).json(taskData);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
 // Create new task
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const newTask = await Task.create({
       ...req.body,
@@ -33,7 +31,7 @@ router.post('/', async (req, res) => {
 });
 
 // Update task completion status
-router.put('/:id', async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const updatedTask = await Task.update(
       { completed: req.body.completed },
@@ -51,8 +49,8 @@ router.put('/:id', async (req, res) => {
 });
 
 // Delete a task
-router.delete('/:id', async (req, res) => {
-  console.log('trying to delete task', req.params.id);
+router.delete("/:id", async (req, res) => {
+  console.log("trying to delete task", req.params.id);
   try {
     const deletedTask = await Task.destroy({
       where: {
@@ -62,7 +60,7 @@ router.delete('/:id', async (req, res) => {
     });
 
     if (!deletedTask) {
-      res.status(404).json({ message: 'No task found with this id!' });
+      res.status(404).json({ message: "No task found with this id!" });
       return;
     }
 
